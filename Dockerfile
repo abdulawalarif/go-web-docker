@@ -1,22 +1,20 @@
 # # We specify the base image we need for our GO app
+FROM golang:1.18.1-buster
 
+# # Create /app directory within the image to hold our applicaiton source code
+WORKDIR /app
 
-# #Create /app directory within the image to hold our application source code
+# # We copy everything in the root directory inot our /app directory
+COPY . .
 
+## install dependencies
+RUN go mod download
 
-# # We copy everything in the root directory into our /app directory
+## build the app with optional configuration
 
-
-# # download Go modules and dependencies
-
-
-# # We copy go files into our /app directory
-
-
-# # Build the app with optional configuration
-
+RUN go build -o /godocker
 
 # # tells Docker that the container listens on specified network ports at runtime
-
-
-# # command to be used to execute when the image is used to start a container
+EXPOSE 8080
+# # commands to be used to execute when the image is used to start a container
+CMD [ "/godocker" ]
